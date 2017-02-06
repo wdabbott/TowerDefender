@@ -7,10 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     public int health;
     public AudioClip splat;
-
-    void Start()
-    {
-    }
+    public GameObject Loot;
 
     void OnTriggerEnter2D(Collider2D coll)
     {
@@ -21,17 +18,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-    }
-
     void Update()
     {
         if (health <= 0)
         {
             GetComponent<AudioSource>().clip = splat;
             GetComponent<AudioSource>().Play();
+
+            Instantiate(Loot, transform.position, Quaternion.identity);
             
             Destroy(this.gameObject);
         }

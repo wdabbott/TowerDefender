@@ -29,7 +29,6 @@ public class TurretAi : MonoBehaviour {
 
             if (target != null)
             {
-                Debug.Log("he's alive");
                 Vector3 vectorToTarget = target.transform.position - transform.position;
                 float angle = (Mathf.Atan2(vectorToTarget.y, vectorToTarget.x)*Mathf.Rad2Deg) + 90;
                 Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
