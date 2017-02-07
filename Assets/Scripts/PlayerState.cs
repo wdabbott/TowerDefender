@@ -6,15 +6,7 @@ public class PlayerState : MonoBehaviour
 {
     public int experience;
     public int health;
-    public List<GameObject> inventory; 
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public List<GameObject> TowerInventory;
+    public List<GameObject> EnhancerInventory;
+    public List<GameObject> ConsumableInventory;
 }

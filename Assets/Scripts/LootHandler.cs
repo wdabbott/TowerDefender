@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using UnityEngine;
 
@@ -19,10 +18,25 @@ public class LootHandler : MonoBehaviour
             var rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero);
 
-            if (hit)
+            if (hit && hit.transform.gameObject.tag == "Loot")
             {
-                PlayerState.inventory.Add(new GameObject("Loot"));
-                Destroy(hit.transform.gameObject);
+                var number = UnityEngine.Random.Range(0, 3);
+
+                switch (number)
+                {
+                    case 0:
+                        PlayerState.TowerInventory.Add(new GameObject("Tower"));
+                        Destroy(hit.transform.gameObject);
+                        break;
+                    case 1:
+                        PlayerState.EnhancerInventory.Add(new GameObject("Enchancer"));
+                        Destroy(hit.transform.gameObject);
+                        break;
+                    case 2:
+                        PlayerState.ConsumableInventory.Add(new GameObject("Consumable"));
+                        Destroy(hit.transform.gameObject);
+                        break;
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     {
         if (coll.tag == "Bullet")
         {
+            var bullet = coll.gameObject;
             health -= 1;
             Destroy(coll.gameObject);
         }
