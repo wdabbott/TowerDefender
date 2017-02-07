@@ -23,8 +23,8 @@ public class HandleGui : MonoBehaviour
     void OnGUI()
     {
         DrawTowers();
-        //DrawConsumables();
-        //DrawEnhancers();
+        DrawConsumables();
+        DrawEnhancers();
     }
 
     private void DrawTowers()
@@ -37,7 +37,7 @@ public class HandleGui : MonoBehaviour
             {
                 if (
                     GUI.Button(
-                        new Rect(leftSide + inventoryItemWidth*i, Screen.height - inventoryItemWidth, inventoryItemWidth,
+                        new Rect(leftSide + inventoryItemWidth*i, Screen.height - (inventoryItemWidth*2), inventoryItemWidth,
                             inventoryItemWidth), state.TowerInventory[i].name))
                 {
                     state.TowerInventory.RemoveAt(i);
@@ -51,21 +51,29 @@ public class HandleGui : MonoBehaviour
     {
         for (int i = 0; i < ConsumablesCount; i++)
         {
-            if (GUI.Button(new Rect(inventoryItemWidth*i, inventoryItemWidth*2, inventoryItemWidth, inventoryItemWidth),
-                "Bomb"))
+            if (i < state.ConsumableInventory.Count)
             {
-                GUI.color = new Color(0, 0, 0, 0f);
+                if (GUI.Button(new Rect(inventoryItemWidth * i, Screen.height - inventoryItemWidth, inventoryItemWidth, inventoryItemWidth),
+                        "Bomb"))
+                {
+                    state.ConsumableInventory.RemoveAt(i);
+                } 
             }
         }
     }
 
     private void DrawEnhancers()
     {
+        var leftSide = Screen.width - (EnchancersCount * inventoryItemWidth);
         for (int i = 0; i < EnchancersCount; i++)
         {
-            if (GUI.Button(new Rect(inventoryItemWidth*i, inventoryItemWidth, inventoryItemWidth, inventoryItemWidth),
-                "Speed"))
+            if (i < state.EnhancerInventory.Count)
             {
+                if (GUI.Button(new Rect(leftSide + inventoryItemWidth * i, Screen.height - inventoryItemWidth, inventoryItemWidth, inventoryItemWidth),
+                        "Speed"))
+                {
+                    state.EnhancerInventory.RemoveAt(i);
+                } 
             }
         }
     }

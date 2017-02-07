@@ -9,4 +9,5 @@ public class PlayerState : MonoBehaviour
     public List<GameObject> TowerInventory;
     public List<GameObject> EnhancerInventory;
     public List<GameObject> ConsumableInventory;
+    public int TotalKills;
 }

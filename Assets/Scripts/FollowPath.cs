@@ -21,17 +21,21 @@ public class FollowPath : MonoBehaviour
 	        var targetVector = new Vector2(path.Waypoints[currentTarget].transform.position.x,
 	            path.Waypoints[currentTarget].transform.position.y);
 
-            transform.position =
-                Vector2.MoveTowards(thisVector, targetVector, speed * Time.deltaTime);
+	        transform.position =
+	            Vector2.MoveTowards(thisVector, targetVector, speed*Time.deltaTime);
 
-            var distance = Vector2.Distance(thisVector, targetVector);
-            
+	        var distance = Vector2.Distance(thisVector, targetVector);
 
-            if (distance < 0.05)
-            {
-                waypointReached = currentTarget;
-                currentTarget++;
-            }
-        }
+
+	        if (distance < 0.05)
+	        {
+	            waypointReached = currentTarget;
+	            currentTarget++;
+	        }
+	    }
+	    else
+	    {
+	        Destroy(this.gameObject);
+	    }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(Path))]
 class PathEditor : Editor
 {
-    public override void OnInspectorGUI()
+    public override void OnInspectorGUI() 
     {
         var path = target as Path;
 
