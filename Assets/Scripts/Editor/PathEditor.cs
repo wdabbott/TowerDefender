@@ -15,7 +15,7 @@ class PathEditor : Editor
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("+", GUILayout.Width(25)))
             {
-                path.AddWaypoint();
+                path.AddWaypoint(i);
             }
 
             if (GUILayout.Button("-", GUILayout.Width(25)))

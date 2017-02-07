@@ -15,13 +15,21 @@ public class Path : MonoBehaviour
         }
     }
 
-    public void AddWaypoint()
+    public void AddWaypoint(int index = 0)
     {
         var newPoint = new GameObject("point" + Waypoints.Count);
         newPoint.transform.parent = transform;
         newPoint.transform.position = new Vector3(Waypoints.Count, 0);
         newPoint.AddComponent<SpriteRenderer>().sprite = sprite;
-        Waypoints.Add(newPoint);
+
+        if (index == 0)
+        {
+            Waypoints.Add(newPoint);
+        }
+        else
+        {
+            Waypoints.Insert(index, newPoint);
+        }
     }
 
     public void RemoveWaypoint(int index)
