@@ -7,8 +7,11 @@ public class TurretAi : MonoBehaviour {
     public GameObject target;
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
-    public int fireTimer;
+    public GameObject TowerRangeGraphic;
+    public int fireSpeed;
+    public int range;
     public bool IsPlaced;
+    public bool IsSelected;
     public AudioSource ShootSound;
 
     private string enemy;
@@ -18,6 +21,10 @@ public class TurretAi : MonoBehaviour {
     void Start()
     {
         ShootSound = GetComponent<AudioSource>();
+        TowerRangeGraphic = Instantiate(TowerRangeGraphic);
+        var rangeSize = TowerRangeGraphic.transform.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
+        TowerRangeGraphic.transform.localScale = new Vector3(range * 2 / rangeSize.x, range * 2 / rangeSize.y);
+        Debug.Log(rangeSize);
     }
 
     // Update is called once per frame
@@ -26,6 +33,8 @@ public class TurretAi : MonoBehaviour {
         if (IsPlaced)
         {
             target = findNearestEnemy();
+
+            TowerRangeGraphic.SetActive(false);
 
             if (target != null)
             {
@@ -37,7 +46,7 @@ public class TurretAi : MonoBehaviour {
             
             timeSinceFire++;
 
-            if (timeSinceFire >= fireTimer && target != null)
+            if (timeSinceFire >= fireSpeed && target != null)
             {
                 Fire();
                 timeSinceFire = 0;
@@ -45,8 +54,9 @@ public class TurretAi : MonoBehaviour {
         }
         else
         {
-            //Debug.Log(Input.mousePosition.x);
-            this.GetComponent<Rigidbody2D>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            this.GetComponent<Rigidbody2D>().position = mousePosition;
+            TowerRangeGraphic.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
         }
     }
 
@@ -56,15 +66,21 @@ public class TurretAi : MonoBehaviour {
         GameObject closestObject = null;
         foreach (var enemy in objectsWithTag)
         {
-            if (closestObject == null)
+            var distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+
+            if (distanceToEnemy <= range)
             {
-                closestObject = enemy;
-            }
-            //compares distances
-            if (closestObject != null && Vector3.Distance(transform.position, enemy.transform.position) 
-                <= Vector3.Distance(transform.position, closestObject.transform.position))
-            {
-                closestObject = enemy;
+                if (closestObject == null)
+                {
+                    closestObject = enemy;
+                }
+
+                var distanceToClosestEnemy = Vector3.Distance(transform.position, closestObject.transform.position);
+                
+                if (distanceToEnemy <= distanceToClosestEnemy)
+                {
+                    closestObject = enemy;
+                }
             }
         }
         
