@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class HandleGui : MonoBehaviour
+public class GuiController : MonoBehaviour
 {
     public int TurretCount;
     public int EnchancersCount;
     public int ConsumablesCount;
 
     private PlayerState state;
-    private HandleMainPlayer playerController;
+    private PlayerController playerController;
     private int inventoryItemWidth = 50;
 
     void Start()
@@ -18,7 +18,7 @@ public class HandleGui : MonoBehaviour
         var playerObject = GameObject.FindGameObjectsWithTag("Player").FirstOrDefault();
 
         state = playerObject.GetComponent<PlayerState>();
-        playerController = playerObject.GetComponent<HandleMainPlayer>();
+        playerController = playerObject.GetComponent<PlayerController>();
     }
     void OnGUI()
     {

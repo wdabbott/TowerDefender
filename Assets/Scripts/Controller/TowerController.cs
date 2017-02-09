@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets;
 using UnityEngine;
 
-public class TurretAi : MonoBehaviour {
+public class TowerController : MonoBehaviour, ISelectable
+{
 
     public GameObject target;
     public GameObject bulletPrefab;
@@ -16,15 +18,13 @@ public class TurretAi : MonoBehaviour {
 
     private string enemy;
     private int timeSinceFire = 0;
+    private bool isSelected = false;
 
     // Use this for initialization
     void Start()
     {
         ShootSound = GetComponent<AudioSource>();
-        TowerRangeGraphic = Instantiate(TowerRangeGraphic);
-        var rangeSize = TowerRangeGraphic.transform.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
-        TowerRangeGraphic.transform.localScale = new Vector3(range * 2 / rangeSize.x, range * 2 / rangeSize.y);
-        Debug.Log(rangeSize);
+        InstantiateTowerRange();
     }
 
     // Update is called once per frame
@@ -96,5 +96,28 @@ public class TurretAi : MonoBehaviour {
         ShootSound.Play();
 
         Destroy(bullet, 2.0f);
+    }
+
+    private void InstantiateTowerRange()
+    {
+        TowerRangeGraphic = Instantiate(TowerRangeGraphic);
+        var rangeSize = TowerRangeGraphic.transform.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
+        TowerRangeGraphic.transform.localScale = new Vector3(range * 2 / rangeSize.x, range * 2 / rangeSize.y);
+    }
+
+    public void SetSelected(bool select)
+    {
+        isSelected = select;
+    }
+
+    void OnGUI()
+    {
+        if (isSelected)
+        {
+            Vector2 targetPos;
+            targetPos = Camera.main.WorldToScreenPoint(transform.position);
+
+            GUI.Box(new Rect(targetPos.x, Screen.height - targetPos.y, 50, 20), fireSpeed.ToString());
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SpawnerScript : MonoBehaviour
+public class SpawnerController : MonoBehaviour
 {
     public List<GameObject> EnemiesToSpawn;
     public int waves;

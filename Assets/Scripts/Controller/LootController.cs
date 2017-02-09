@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class LootHandler : MonoBehaviour
+public class LootController : MonoBehaviour
 {
 
     public PlayerState PlayerState;
@@ -25,19 +25,34 @@ public class LootHandler : MonoBehaviour
                 switch (number)
                 {
                     case 0:
-                        PlayerState.TowerInventory.Add(new GameObject("Tower"));
-                        Destroy(hit.transform.gameObject);
+                        AddTower();
                         break;
                     case 1:
-                        PlayerState.EnhancerInventory.Add(new GameObject("Enchancer"));
-                        Destroy(hit.transform.gameObject);
+                        AddEnhancer();
                         break;
                     case 2:
-                        PlayerState.ConsumableInventory.Add(new GameObject("Consumable"));
-                        Destroy(hit.transform.gameObject);
+                        AddConsumable();
                         break;
                 }
+
+                Destroy(hit.transform.gameObject);
             }
         }
+    }
+
+    private void AddConsumable()
+    {
+        PlayerState.ConsumableInventory.Add(new GameObject("Consumable"));
+        
+    }
+
+    private void AddEnhancer()
+    {
+        PlayerState.EnhancerInventory.Add(new GameObject("Enchancer"));
+    }
+
+    private void AddTower()
+    {
+        PlayerState.TowerInventory.Add(new GameObject("Tower"));
     }
 }

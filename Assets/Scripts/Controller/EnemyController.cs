@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using Assets;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, ISelectable
 {
     public int health;
     public AudioClip splat;
@@ -22,7 +23,7 @@ public class EnemyController : MonoBehaviour
         if (coll.tag == "Bullet")
         {
             var bullet = coll.gameObject;
-            health -= 1;
+            ApplyBulletEffects(bullet);
             Destroy(coll.gameObject);
         }
     }
@@ -56,5 +57,12 @@ public class EnemyController : MonoBehaviour
 
             GUI.Box(new Rect(targetPos.x, Screen.height - targetPos.y, 50, 20), health + "/" + 10);
         }
+    }
+
+    private void ApplyBulletEffects(GameObject bullet)
+    {
+        var bulletState = bullet.GetComponent<BulletState>();
+
+        health -= bulletState.Damage;
     }
 }
